@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: sans-serif;
+        }
+
+        .row::before,
+        .row:after {
+            content: '';
+            display: block;
+            clear: both;
+        }
+
+
+        .col-24 {
+            width: 100%;
+        }
+
+        .col-23 {
+            width: 95.83333333333334%;
+        }
+
+        .col-22 {
+            width: 91.66666666666667%;
+        }
+
+        .col-21 {
+            width: 87.5%;
+        }
+
+        .col-20 {
+            width: 83.33333333333334%;
+        }
+
+        .col-19 {
+            width: 79.16666666666667%;
+        }
+
+        .col-18 {
+            width: 75%;
+        }
+
+        .col-17 {
+            width: 70.83333333333334%;
+        }
+
+        .col-16 {
+            width: 66.66666666666667%;
+        }
+
+        .col-15 {
+            width: 62.50000000000001%;
+        }
+
+        .col-14 {
+            width: 58.333333333333336%;
+        }
+
+        .col-13 {
+            width: 54.16666666666667%;
+        }
+
+        .col-12 {
+            width: 50%;
+        }
+
+        .col-11 {
+            width: 45.833333333333336%;
+        }
+
+        .col-10 {
+            width: 41.66666666666667%;
+        }
+
+        .col-9 {
+            width: 37.5%;
+        }
+
+        .col-8 {
+            width: 33.333333333333336%;
+        }
+
+        .col-7 {
+            width: 29.166666666666668%;
+        }
+
+        .col-6 {
+            width: 25%;
+        }
+
+        .col-5 {
+            width: 20.833333333333336%;
+        }
+
+        .col-4 {
+            width: 16.666666666666668%;
+        }
+
+        .col-3 {
+            width: 12.5%;
+        }
+
+        .col-2 {
+            width: 8.333333333333334%;
+        }
+
+        .col-1 {
+            width: 4.166666666666667%;
+        }
+
+        .col {
+            float: left;
+            /* border: 1px solid black; */
+        }
+
+        .container {
+            max-width: 1040px;
+            margin: 0 auto;
+        }
+
+        .text-right {
+            text-align: right;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        .nav.global {
+            height: 28px;
+            color: #d5d5d5;
+            background-color: #545652;
+        }
+
+        .nav.global a {
+            color: #d5d5d5;
+            font-size: 12px;
+            padding: 0 12px;
+        }
+
+        .nav.global a:hover {
+            color: #fff;
+        }
+
+        .nav.global a:nth-last-of-type(2) {
+            padding-right: 0;
+        }
+
+        .nav.global a:last-child {
+            padding-left: 0;
+        }
+
+        .nav.page {
+            background: #f0f6f3;
+        }
+
+        .a-logo {
+            display: none;
+        }
+
+        .logo {
+            background: url(image/logo.png) no-repeat;
+            background-position: 15px 13px;
+            height: 56px;
+            width: 145px;
+            margin-top: 10px;
+
+        }
+
+        .nav.page a,
+        .nav.page form {
+            padding: 25px 16px;
+            display: inline-block;
+            position: relative;
+        }
+
+        .nav.page a {
+            color: #037b82;
+        }
+
+        .nav.page a:hover {
+            background-color: #037b82;
+            color: #fff;
+        }
+
+        .nav.page .search {
+            width: 280px;
+            height: 30px;
+            outline: none;
+        }
+
+        .nav.page button {
+            width: 30px;
+            height: 30px;
+            background-color: transparent;
+            border: none;
+            position: absolute;
+            top: auto;
+            left: 264px;
+        }
+
+        .like {
+            color: #ca6445;
+            background: #fae9da;
+            padding: 10px 0;
+            line-height: 1.5;
+            text-align: center;
+        }
+
+        .activity-card{
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #e5e5e5;
+
+        }
+
+        .activity {
+            padding-left: 20px;
+            padding-right: 40px;
+        }
+
+        .activity .title {
+            color: #37a;
+            line-height: 1.3;
+            margin-bottom: 10px;
+            display: inline-block;
+            font-size: 15px;
+        }
+
+        .activity .title:hover {
+            color: #FFFFFF;
+            background: #37a;
+        }
+
+        .activity .desc,
+        .activity .info {
+            font-size: 13px;
+        }
+
+        .activity .desc {
+            padding: 10px;
+            color: #999;
+            background: #f9f9f9;
+        }
+
+        .activity .desc img {
+            float: left;
+            padding: 5px 10px;
+        }
+
+        .activity .info {
+            color: #666;
+        }
+
+        .activity .info span:hover {
+            color: #FFFFFF;
+            background: #37a;
+        }
+
+        .group .title {
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+
+        .group-card{
+            border-top: 1px solid #5e5e5e;
+        }
+        .group .group-card img {
+            width: 100%;
+            padding: 10px 0;
+        }
+
+        .group .group-card .name {
+            font-size: 14px;
+            color: #37a;
+        }
+
+        .group .group-card .name:hover {
+            color: #FFFFFF;
+
+            background: #37a;
+        }
+
+        .group .group-card .num,
+        .group .group-card .join {
+            font-size: 13px;
+        }
+
+        .group .group-card .num {
+            color: #666;
+            padding-right: 10px;
+        }
+
+        .group .group-card .info{
+            padding: 10px;
+        }
+
+        .group .group-card .join {
+            color: #669;
+        }
+
+        .group .group-card .join:hover {
+
+            color: #FFFFFF;
+            background: #37a;
+        }
+        .row.footer{
+            border-top: 1px dashed #666;
+            margin-top: 20px;
+            font-size:13px ;
+        }
+        .row.footer a{
+color: #3377aa;
+padding: 0 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="row nav global">
+
+        <div class="col col-16">
+            <a href="#">豆瓣</a>
+            <a href="#">读书 </a>
+            <a href="#">电影</a>
+            <a href="#">音乐</a>
+            <a href="#">同城 </a>
+            <a href="#">小组</a>
+            <a href="#">阅读</a>
+            <a href="#">FM</a>
+            <a href="#">时间</a>
+            <a href="#">豆品</a>
+            <a href="#">更多</a>
+        </div>
+        <div class="col col-8 text-right">
+            <a href="#">下载豆瓣客户端</a>
+            <a h更多f="#">登录/</a>
+            <a href="#">注册</a>
+        </div>
+
+    </div>
+    <div class="row main">
+
+        <div class="row nav page">
+            <div class="container">
+                <div class="col col-4  logo">
+                    <a class="a-logo" href=""></a>
+                </div>
+                <div class="col col-14">
+                    <a href="#">精选</a>
+                    <a href="#">文化</a>
+                    <a href="#">行摄</a>
+                    <a href="#">娱乐</a>
+                    <a href="#">时尚</a>
+                    <a href="#">生活</a>
+                    <a href="#">科技</a>
+                </div>
+                <div class="col col-6">
+                    <form action="">
+                        <input class="search" type="text" placeholder="小组、话题">
+                        <button type="submit"><img src="image/search.png" alt=""></button>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="container">
+            <h1 class="title">讨论精选</h1>
+            <div class="row">
+                <div class="col col-18">
+                    <div class="row activity-card">
+                        <div class="col col-2">
+                            <div class="like">
+                                <div>10</div>
+                                <div>喜欢</div>
+                            </div>
+                        </div>
+                        <div class="col col-22 activity">
+                            <a class="title">第一次发！不好笑删！这是我的生日礼物！
+                            </a>
+                            <div class="desc">
+                                <img src="https://img1.doubanio.com/view/group_topic/small/public/p239200648.webp"
+                                    alt="">
+                                初中的时候喜欢吃热狗肠！今年姐妹在我生日的时候送了我一台热狗机！ 我最近回家才拆！ 后来我准备搞下卫生去烤热狗的时候发现
+                                这个店家已经把贴纸都给我贴好了！还把每贴完的贴纸送给我...</div>
+                            <div class="info">来自<span>哈哈哈哈哈哈哈哈哈哈哈小组</span> 2019-12-30</div>
+                        </div>
+                    </div>
+
+                    <div class="row activity-card">
+                        <div class="col col-2">
+                            <div class="like">
+                                <div>10</div>
+                                <div>喜欢</div>
+                            </div>
+                        </div>
+                        <div class="col col-22 activity">
+                            <a class="title">第一次发！不好笑删！这是我的生日礼物！
+                            </a>
+                            <div class="desc">
+                                <img src="https://img1.doubanio.com/view/group_topic/small/public/p239200648.webp"
+                                    alt="">
+                                初中的时候喜欢吃热狗肠！今年姐妹在我生日的时候送了我一台热狗机！ 我最近回家才拆！ 后来我准备搞下卫生去烤热狗的时候发现
+                                这个店家已经把贴纸都给我贴好了！还把每贴完的贴纸送给我...</div>
+                            <div class="info">来自<span>哈哈哈哈哈哈哈哈哈哈哈小组</span> 2019-12-30</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col col-6 group">
+                    <div class="title">值得加入的小组</div>
+                    <div class="row group-card">
+                        <div class="col col-6 ">
+                            <img src="http://dummyimage.com/300x300" alt="">
+                        </div>
+                        <div class="col col-18 info">
+                            <a href="#" class="name">上海同城单身交友聚会活动群</a>
+                            <div>
+                                <span class="num">81101个成员</span>
+                                <a href="#" class="join">+加入小组</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row group-card">
+                        <div class="col col-6 ">
+                            <img src="http://dummyimage.com/300x300" alt="">
+                        </div>
+                        <div class="col col-18 info">
+                            <a href="#" class="name">上海同城单身交友聚会活动群</a>
+                            <div>
+                                <span class="num">81101个成员</span>
+                                <a href="#" class="join">+加入小组</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row footer">
+        <div class="container">
+            <div class="col col-12">
+                <span>© 2005－2020 douban.com, all rights reserved 北京豆网科技有限公司</span>
+            </div>
+            <div class="col col-12">
+                <a href="#">关于豆瓣</a>
+                <a href="#">在豆瓣工作</a>
+                <a href="#">联系我们</a>
+                <a href="#">法律声明</a>
+                <a href="#">帮助中心</a>
+                <a href="#">移动应用</a>
+                <a href="#">豆瓣广告</a>
+            </div>
+        </div>
+        
+    </div>
+</body>
+
+</html>
