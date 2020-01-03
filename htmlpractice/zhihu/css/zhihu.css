@@ -1,0 +1,237 @@
+
+body{
+    /* background-color: ; */
+    background: #f6f6f6;
+}
+div
+{
+    background-color: white;
+}
+.gray{
+    background: #f6f6f6;
+}
+.nav.global,
+.nav.page {
+    border-bottom: 1px solid rgba(26, 26, 26, .1);
+    box-shadow: 0 1px 3px rgba(26, 26, 26, .1);
+}
+
+.nav.global .logo {
+    padding: 6px 20px;
+}
+
+.nav.global .linkgroup a {
+    padding: 14px 17px;
+    display: inline-block;
+    color: #8590a6;
+    font-size: 15px;
+}
+
+.nav.global .linkgroup a:hover {
+    color: #444;
+}
+
+.nav.global form {
+    position: relative;
+}
+
+.nav.global form .search {
+    width: 80%;
+    margin: 5px 0;
+    /* height: 30px; */
+    font-size: 20px;
+    line-height: 1.5;
+    outline: none;
+    border: 1px solid #ebebeb;
+    background: #f6f6f6;
+}
+
+.nav.global form button {
+    background-color: transparent;
+    border: none;
+    position: absolute;
+    /* width: 20px; */
+    top: 6px;
+    left: 269px;
+    padding: 0;
+}
+
+.nav.global form img {
+    width: 100%;
+}
+
+.nav.global .login-group {
+    margin: 5px;
+}
+
+.nav.global .login,
+.nav.global .join {
+    font-size: 14px;
+    line-height: 32px;
+    padding: 0 16px;
+    display: inline-block;
+    text-align: center;
+    border: 1px solid;
+    border-radius: 3px;
+}
+
+.nav.global .login {
+    color: #0084ff;
+    background: none;
+
+}
+
+.nav.global .login:hover {
+    color: #0084ff;
+    border-color: #0084ff;
+    background-color: rgba(0, 132, 255, .06);
+}
+
+.nav.global .join {
+    color: #fff;
+    background-color: #0084ff;
+    border-color: #0077e6;
+}
+
+.nav.global .join:hover {
+    border-color: #0077e6;
+    background-color: #0077e6;
+}
+
+.nav.page{
+    margin-bottom: 10px;
+}
+.nav.page a {
+    display: inline-block;
+    padding: 14px 20px;
+    font-size: 16px;
+    color: #1a1a1a;
+    position: relative;
+}
+
+.nav.page a:focus::after {
+    display: block;
+    content: '';
+    width: 70%;
+    float: left;
+    border-top: 3px solid #0084ff;
+    position: absolute;
+    ;
+    top: 47px;
+    left: 12px;
+}
+
+.nav.page a:active,
+.nav.page a:visited,
+.nav.page a:focus {
+    font-weight: 600;
+}
+
+
+.article-card .card {
+    padding: 10px;
+}
+
+.article-card .card>* {
+    margin-bottom: 10px;
+}
+
+
+.article-card .card .title {
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 1.6;
+    /* margin-bottom: 10px; */
+}
+
+.article-card .card .title a:hover {
+    color: #175199;
+
+}
+
+.article-card .card .desc {
+    font-size: 15px;
+    color: #1a1a1a;
+}
+
+.article-card .card .desc span {
+    padding: 0;
+    margin-left: 4px;
+    color: #175199;
+}
+
+.article-card .card .desc span:hover {
+    color: grey;
+    padding: 0 10px;
+
+}
+
+.article-card .card .thumb {
+    color: #0084ff;
+    background: rgba(0, 132, 255, .1);
+    border-color: transparent;
+    padding: 0 12px;
+    font-size: 14px;
+    line-height: 2;
+}
+
+.article-card .card .thumb:hover {
+    background-color: rgba(0, 132, 255, .15);
+
+}
+
+.article-card .card .button-tool button {
+    margin-left: 24px;
+    font-size: 14px;
+    line-height: 2;
+    background-color: transparent;
+    border: none;
+    border-radius: 0.3;
+    color: #8590a6;
+    text-align: center;
+    outline: none;
+}
+.sidecard{
+    margin-left: 15px;
+}
+.hot{
+    margin-left: 10px;
+}
+
+.hot .title {
+    font-weight: 600;
+    font-size: 15px;
+    padding: 10px 20px;
+    border-bottom: 1px solid #666;
+}
+
+.hot .hots {
+    padding: 8px 16px;
+}
+
+.hot .hots a {
+    display: block;
+    font-size: 14px;
+    color: #1a1a1a;
+    line-height: 21px;
+}
+
+.hot .hots a:hover {
+    color: #23619a;
+}
+
+.sidecard .info{
+    margin-top: 20px;
+    background-color:#f6f6f6; ;
+}
+.sidecard .info a{
+    font-size: 14px;
+line-height: 32px;
+color: #8590a6;
+    display: block;
+    
+}
+
+.sidecard .info a:hover{
+    color: #23619a;
+}
