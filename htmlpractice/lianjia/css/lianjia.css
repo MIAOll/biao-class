@@ -1,0 +1,427 @@
+.head{
+    background-image: url(../image/banner.jpg);
+    color: #ffffff;
+    padding-top: 30px;
+    height: 600px;
+}
+.header .logo,.header .location{
+    vertical-align: bottom;
+}
+.header .logo{
+    width: 137px;
+    height: 66px;
+    display: inline-block;
+    background-image: url(../image/lianjia-sprite.png);
+    background-position: 2px -365px;
+}
+
+.header .location{
+    background: rgba(0,0,0,0.25);
+    display: inline-block;
+    height: 27px;
+    /* height: 700px; */
+    line-height: 27px;
+    text-align: center;
+    border-radius: 15px;
+    padding: 0 5px;
+    font-size: 12px;
+    margin-left: 10px;
+    margin-top: 15px;
+    border: none;
+ 
+}
+.header .location .location-icon{
+    display: inline-block;
+    background-image: url(../image/lianjia-sprite.png);
+    background-position: -189px -20px;
+    width: 12px;
+    height: 12px;
+}
+
+.header .auth{
+    text-align: right;
+    height: 20px;
+    
+
+}
+.header .auth .auth-icon{
+    display: inline-block;
+    background-image: url(../image/lianjia-sprite.png);
+    background-position: -201px -19px;
+    width: 20px;
+    height: 18px;
+    padding: 0 3px;
+}
+.header .auth button{
+    background-color: rgba(0,0,0,0);
+    position: relative;
+    top: -3px;
+    padding-bottom: 3px;
+    color: inherit;
+    border: none;
+    font-weight: 400;
+    font-style: normal;
+
+    
+}
+.header .auth .nav{
+     margin-top: 12px;
+}
+
+.header .auth .nav a{
+    font-size: 16px;
+    margin-left: 20px;
+    font-weight: 700; 
+    /* color: rgba(255,255,255,0.1); */
+}
+
+
+
+.head-wrap{
+    margin: 120px auto 0 auto;
+    text-align: center;
+    height: 69px;
+    width: 1000px;
+}
+.head-wrap .title{
+font-size: 64px;
+}
+.head-wrap .sub-title{
+    text-align: center;
+    /* color: #fff;  */
+    font-size: 20px;
+    /* margin-bottom: 20px; */
+    margin-top: 4px;
+    height: 35px;
+    line-height: 35px;
+}
+.head-wrap form{
+    padding: 20px;
+    position: relative;
+}
+.head-wrap form {
+    margin-bottom: 10px;
+}
+.head-wrap form .options{
+    margin-bottom: 20px;
+}
+
+.head-wrap form  span:first-child{
+    padding-left: 180px;
+}
+.head-wrap form  span{
+    padding-right: 20px;
+    float: left;
+    color: rgba(255,255,255,0.6);
+}
+.head-wrap form  span:hover{
+color: #ffffff;
+}
+
+.head-wrap form i{
+    border-left: 9px solid transparent;
+    border-right: 9px solid transparent;
+    width: 0;
+    height: 0;
+    
+    position: absolute;
+    top: 53px;
+    left: 215px;
+    border-bottom: 10px solid #fff;
+    z-index: 9;
+
+}
+
+.head-wrap form input{
+    width: 626px;
+    padding-left: 20px;
+    border: 0;
+    height: 55px;
+    line-height: 55px;
+    border-radius: 2px;
+    font-size: 14px;
+
+}
+
+.head-wrap form button{
+    background: #00ae66;
+    width: 127px;
+    height: 55px;
+    float: right;
+    border: 0;
+    display: block;
+    border-radius: 0 2px 2px 0;
+    position: absolute;
+    top: 61px;
+    right: 186px;
+    cursor: pointer;
+    color: #ffffff;
+    text-align: center;
+    font-size: 18px;
+    outline: none;
+}
+
+.head .notice{
+    padding-top: 270px;
+}
+
+.head .notice a{
+    text-decoration: none;
+    outline: none;
+    color: rgba(255,255,255,0.6);
+    font-size: 12px; 
+    padding-right: 10px;
+}
+.head .notice a:hover{
+color: white;
+}
+.head .notice a img{
+    position: relative;
+    left: 0;
+    top: 2px;
+    height: 16px;
+    margin-right: 7px;
+}
+.sub-nav .nav-card{
+    text-align: center;
+}
+.sub-nav .nav-card img{
+    padding: 10px 130px;
+    width: 80%;
+    margin: 0 40px;
+}
+.sub-nav .nav-card span
+,.sub-nav .nav-card img
+{
+    display: block;
+}
+.sub-nav .nav-card .title{
+    padding-top: 10px;
+    font-size: 18px;
+    color: #394043;    
+}
+.sub-nav .nav-card .desc{
+        /* width: 183px;
+        margin: 3px auto 5px auto; */
+        font-size: 12px;
+        color: #b0b3b4;
+        line-height: 18px;
+}
+
+.download{
+    padding: 85px;
+    background-image: url(../image/bg-app.jpg);
+
+}
+.download .title{
+    background-image: url(../image/lianjia-sprite.png);
+    background-position:-448px -379px ;
+    width: 286px;
+    height: 118px;
+    margin-bottom: 22px;
+}
+.download .ads{
+    line-height: 22px;
+    font-size: 14px;
+    color: #333;
+    font-family: "Hiragino Sans GB","Microsoft Yahei UI","Microsoft Yahei","å¾®è½¯é›…é»‘",'Segoe UI',Tahoma,"å®‹ä½“b8b\4f53",SimSun,sans-serif;
+margin-bottom: 40px;
+}
+.download .apple,.download .android{
+    display: block;
+    width: 134px;
+    height: 44px;
+    background-image: url(../image/lianjia-sprite.png);
+}
+.download .apple{
+    background-position: -20px -139px;
+}
+.download .android{
+    margin-top: 14px;
+    background-position: -20px -197px;
+}
+
+.download .qrcode img{
+    border: 0;
+    vertical-align: top;
+    width: 102px;
+}
+.ershoufang,.xiaoqv,.xinfang,.haiwai{
+    padding-top: 45px;
+    padding-bottom: 100px;
+}
+
+
+.ershoufang .title{
+    width: 248px;
+    height: 30px;
+    background-image: url(../image/lianjia-sprite.png);
+    background-position: -19px -94px;
+}
+.ershoufang .sub-title,.xiaoqv .sub-title,.xinfang .sub-title,.haiwai .sub-title{
+    color: #888;
+    margin-top: 10px;
+    /* margin-bottom: 30px; */
+    width: 1150px;
+    
+}
+.ershoufang .sub-title a,.xiaoqv .sub-title a,.xinfang .sub-title a,.haiwai .sub-title a{
+    float: right;
+}
+ .home-card{
+    padding: 0 15px;
+}
+/* .ershoufang */
+ .home-card img:first-child{
+    width: 86px;
+    position: relative;
+    top: 34px;
+    left: 0px;
+}
+ .home-card p{
+    font-family: HiraginoSansGB-W6;
+    font-size: 18px;
+    color: #101D37;
+    letter-spacing: 0;
+    line-height: 24px;
+}
+ .home-card p:last-child span{
+    color: #999;
+    font-size: 12px;
+}
+ .home-card p:last-child span:last-child{
+float: right;
+font-family: HiraginoSansGB-W6;
+    font-size: 16px;
+    color: #FA5741;
+    letter-spacing: 0;
+}
+.xiaoqv{
+    background: #eeeef1;
+}
+.xiaoqv .title,.haiwai .title{
+    
+    background-size: 100%;    
+}
+.xiaoqv .title{width: 187px;
+    height: 28px;
+    background-image: url(../image/xiaoqv.png);
+}
+.haiwai .title{
+    width: 287px;
+    height: 30px;
+    /* border: 1px solid red; */
+    background-image: url(../image/haiwai.png);
+}
+.xinfang .title{
+    
+    width: 158px;
+    height: 30px;
+    background-image: url(../image/lianjia-sprite.png);
+    background-position: -20px -56px;
+}
+
+.truth{
+    background-image: url(../image/truth-bg.jpg);
+    width: 100%;
+    height: 180px;
+    padding-top: 60px;
+    padding-left: 95px;
+}
+.truth .truth-icon{
+    background-image: url(../image/lianjia-sprite.png);
+    background-repeat: no-repeat;
+    background-position: -19px -254px;
+    width: 507px;
+    height: 115px;
+    margin-top: 4px;
+
+}
+.truth .sub-search{
+    padding-left: 90px;
+}
+.truth .sub-search .truth-txt{
+    margin-bottom: 10px;
+    color: #fff;
+    font-size: 16px;
+    line-height: 25px;
+}
+.truth .sub-search input{
+    width: 531px;
+    height: 42px;
+    /* margin-top: 18px; */
+    padding: 7px 12px;
+    background: #fff;
+    line-height: 29px;
+    border-radius: 2px;
+    border: none;    
+}
+.truth .sub-search span{
+    background-image: url(../image/lianjia-sprite.png);
+    background-position: -407px -20px;
+    width: 18px;
+    height: 18px;
+    display: inline-block;
+    margin-top: 5px;
+    float: right;
+    cursor: pointer;
+    position: relative;
+    top: -33px;
+    left: -14px;
+}
+
+.footer{
+    background-image: url(../image/footer-bg.jpg);
+}
+.footer .info{
+    padding: 26px 0;
+    border-bottom: 1px sol #666666;
+    font-size: 14px;
+}
+.footer .info a{
+    color: #fff;
+    margin-right: 15px;
+    
+}
+ .footer .info span{
+float: right;
+color: #7dcfa0; 
+}
+/* .footer .links  .tab{
+    display: block;
+} */
+.footer .links{
+    padding-bottom: 50px;
+    border-bottom: 1px solid #666;
+}
+.footer .links .tab span{
+    display: inline-block; 
+    padding: 8px 10px;
+    background: #121212;
+    color: #888c8e;
+    float: left;
+    margin-right: 12px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    font-size: 12px;    
+}
+.footer .links .tab span:hover{
+    background: #394043;
+    color: #fff;
+}
+.footer .links .link-list a{
+    color: #888c8e;
+    font-size: 12px;
+    display: inline-block;
+    margin: 10px 10px 0 0;
+    text-decoration: none;
+}
+.footer .links .link-list a:hover{
+    text-decoration: underline;
+}
+.footer .others{
+    color: #888c8e;
+    font-size: 12px;
+    line-height: 20px;
+}
+

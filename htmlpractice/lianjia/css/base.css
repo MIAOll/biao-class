@@ -1,6 +1,8 @@
 * {
     box-sizing: border-box;
-    font-family: sans-serif;
+    font-family: "Hiragino Sans GB",sans-serif;
+    margin: 0;
+    
 }
 
 .row::before,
@@ -109,11 +111,11 @@
 
 .col {
     float: left;
-    
+    /* border: 1px solid black; */
 }
 
 .container {
-    max-width: 1040px;
+    max-width: 1250px;
     margin: 0 auto;
 }
 a{

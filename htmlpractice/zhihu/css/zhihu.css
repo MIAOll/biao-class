@@ -193,6 +193,8 @@ div
 }
 .sidecard{
     margin-left: 15px;
+    overflow:visible
+    
 }
 .hot{
     margin-left: 10px;
@@ -227,16 +229,14 @@ div
     display: block;
     margin-top: 20px;
     background-color:#f6f6f6; 
-    position: fixed;
-    left: 65%;
-    top: 20%;
+    position: sticky;
+    top: 10px;
 }
 .sidecard .info a{
     font-size: 14px;
     line-height: 32px;
     color: #8590a6;
-    display: block;
-    
+    display: block;    
 }
 
 .sidecard .info a:hover{
