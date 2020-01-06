@@ -1,0 +1,334 @@
+body{
+    font-family: 'Microsoft YaHei';
+}
+.yuan{
+    border-radius: 50%;
+}
+.head{
+    background-image: url(../image/bg.png);
+    background-repeat: no-repeat;
+    font-weight: 900;
+}
+.head .logo{
+    padding: 0px 185px;
+}
+.head .nav.global{
+    padding: 10px 25px;
+    font-size: 14px;
+    color: #fff;
+    text-shadow: 0 1px 1px rgba(0,0,0,.4);
+}
+.head .nav.global .navigator{
+    padding-top: 10px;
+}
+
+
+.head .nav.global  .touxiang{
+    position: relative;
+    top: 1px;
+    left: 8px;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+}
+
+
+.head .nav.global .search form{
+    display: block;
+    padding: 0 38px 0 16px;
+    border: 1px solid hsla(0,0%,100%,0);
+    border-radius: 2px;
+    background-color: #fff;
+     position: relative;
+}
+
+.head .nav.global .search form input{
+    width: 100%;
+    height: 34px;
+    border: none;
+    background-color: transparent;
+    box-shadow: none;
+    color: #999;
+    font-size: 14px;
+    line-height: 34px;
+    outline: none;
+}
+.head  .nav.global .search form button{
+    width: 48px;
+    height: 36px;
+    position: absolute;
+    top: -1px;
+    left: 278px;
+    margin: 0;
+    padding: 0;
+    border-radius: 2px;
+    border: none;
+    background: #e7e7e7;
+    color: #505050;
+    font-size: 16px;
+    line-height: 26px;
+    opacity: 0.5;
+    cursor: pointer;
+}
+.head .nav.global .search form img{
+    position: absolute;;
+    top: 10px;
+    left: 295px;
+    width: 15px;
+}
+
+.head .nav.global .setting{
+    padding-top: 3px;
+}
+.head .nav.global .navigator a,.head .nav.global .setting span{
+    display: inline-block;
+}
+.head .nav.global .touxiang,.head .nav.global .setting span{
+    vertical-align: middle;
+}
+.head .nav.global .setting span:first-of-type{
+    padding-left:10px; ;
+}
+.head .nav.global .setting a{
+    cursor: pointer;
+    position: relative;
+    color: #fff;
+    font-size: 14px;
+    display: inline-block;
+    width: 100px;
+    height: 36px;
+    line-height: 36px;
+    text-align: center;
+    background: #fb7299;
+    border-radius: 2px;
+    margin-left: 4px;
+}
+
+.main  .nav.page {
+    padding: 20px 0;
+}
+.main  .nav.page .icon-group::after{
+    content: '';
+    height: 15px;
+    border: 1px solid #999;
+    position: relative;
+    top: -24px;
+    left: 10px;
+}
+.main .nav.page .keywords::after{
+    content: '';
+    height: 15px;
+    border: 1px solid #999;
+    position: relative;
+    top: -47px;
+    left: 576px;
+}
+.main  .nav.page .icon-group .round{
+    border-radius: 50%;
+    line-height: 36px;
+    text-align: center;
+    width: 36px;
+    height: 36px;
+    margin-left: 4px;
+}
+.main  .nav.page .icon-group a{
+    padding: 5px;
+    display: inline-block;
+    width: 55px;
+    font-size: 14px;
+    text-align: center;
+    
+}
+
+.main  .nav.page .icon-group a:first-child{
+    margin-left: 8px;
+}
+
+.pink{
+    background-color: #ff5c7c;
+}
+.yellow{
+    background-color: #fcba2a;
+}
+.blue{
+    background-color: #00a1d6;
+}
+
+.main  .nav.page .keywords a{
+    font-size: 14px;
+    padding-bottom: 12px;
+}
+.main  .nav.page .keywords a span{
+    font-size: 12px;
+    font-style: normal;
+    display: inline-block;
+    background: #73c9e5;
+    border-radius: 2px;
+    color: #fff;
+    margin-left: 1px;
+    width: 32px;
+    text-align: center;
+}
+.main  .nav.page .other a{
+    padding-bottom: 10px;
+}
+.main  .nav.page .other a span{
+    font-size: 14px;
+    padding-left: 5px;
+}
+.main .first-screen .slider{
+    width: 459px;
+    height: 202px;
+    padding-right: 5px;
+}
+.main .first-screen .slider img{
+    width: 100%;
+}
+.main .first-screen .hot a{
+    display: inline-block;
+    margin-bottom: 2px;
+    padding-right: 15px;
+}
+.main .first-screen .hot a img{
+    width: 160px;
+    height: 96px;
+}
+.main .tuiguang{
+    /* background-color: #fb7299; */
+    margin-top: 30px;
+}
+.main .tuiguang .title{
+    margin-bottom: 20px;
+}
+.main .tuiguang .title .name{
+font-size: 20px;
+padding-right: 20px;
+line-height: 2;
+}
+.main .tuiguang .title a{
+    font-size: 12px;
+    padding-right: 20px;
+}
+.main .tuiguang .online-list{
+    display: inline-block;
+    width: 100%;
+    height: 30px;
+    border: 1px solid #505050;
+    padding: 7px 0px;
+    text-align: center;
+    margin-top: 5px;
+}
+.main .tuiguang .desc img{
+    width: 170px;
+    height: 96px;
+}
+.main .tuiguang .desc span{
+    display: block;
+}
+.main .tuiguang .desc span:first-of-type{
+    font-size: 12px; 
+    line-height: 20px;
+    margin: 10px 0 8px;
+}
+.main .tuiguang .desc span:last-of-type{
+    font-size: 12px; 
+    color: #999;
+    line-height: 16px
+}
+.main .tuiguang .datu{
+    padding: 15px 0;
+}
+.main .tuiguang .datu img{
+    width: 247px;
+}
+.main .ad1 img{
+    width: 100%;
+}
+.main .zhibo{
+    padding-top: 25px;
+}
+.main .zhibo .title .main-title{
+    font-size: 20px;
+    margin-right: 20px;
+}
+.main .zhibo .title a,.main .zhibo .title span{
+    font-size: 12px;
+    /* margin-right: 20px; */
+}
+.main .zhibo .title span{
+    margin-right: 10px;
+}
+.main .zhibo .title .options a,.main .zhibo .title .options span{
+    display: inline-block;
+    float: right;
+    font-size: 12px;
+    padding: 2px 8px;
+    margin-top: 8px;
+    border: 1px solid #000;
+}
+.main .zhibo .title .tab span{
+    font-size: 12px;
+    margin-top: 8px;
+    display: inline-block;
+    text-align: center;
+}
+.main .zhibo .item-list .item{
+    padding: 0px 5px 5px 0;
+}
+.main .zhibo .item-list .item .fengmian{
+    width: 158px;
+    height: 96px;
+}
+.main .zhibo .item-list .item .sm-touxiang{
+    width: 36px;
+    height: 36px;
+}
+.main .zhibo .item-list .item p:first-of-type{
+    font-size: 13px;
+/* padding: 0px; */
+}
+.main .zhibo .item-list .item p:last-of-type{
+margin: 0px;
+font-size: 12px;
+color: #505050;
+}
+.main .zhibo .item-list .item .qv{
+font-size: 8px;
+color: #999;
+margin-top: 8px;
+}
+.main .zhibo .ad2{
+    padding-left: 12px;
+}
+.footer{
+    padding-top: 30px;
+    background-color: #f6f9fa;
+    font-size: 14px;
+}
+.footer .links{
+    border-right: 1px solid #505050;
+}
+.footer .links .title{
+    font-size: 16px;
+    color: #999;
+    display: block;
+    height: 20px;
+    margin-bottom: 20px;
+}
+.footer .links .icons{
+    padding: 20px 48px;
+}
+.footer .links .icons span{
+    width: 76px;
+    display: inline-block;
+    text-align: center;
+    /* padding: 20px 30p; */
+}
+.footer .info{
+    padding-top: 30px;
+}
+.footer .info p{
+    margin-bottom: 8px;
+    font-size: 12px;
+    color: #999999;
+}
