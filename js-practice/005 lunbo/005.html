@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+    <style>
+        .lunbo {
+            position: relative;
+            width: 450px;
+            height: 450px;
+            text-align: center;
+            border: 1px solid red;
+        }
+        
+        .arrow-left,
+        .arrow-right {
+            position: absolute;
+            top: 30%;
+        }
+        
+        .arrow-left {
+            left: 10%;
+        }
+        
+        .arrow-right {
+            /* top: 30%; */
+            right: 5%;
+        }
+        
+        .items {
+            position: absolute;
+            top: 80%;
+            left: 40%;
+        }
+        
+        .item {
+            display: inline-block;
+            border: 2px solid red;
+            border-radius: 50%;
+            margin: 5px;
+            width: 5px;
+            height: 5px;
+        }
+        
+        .item.active {
+            border: 2px solid steelblue;
+        }
+    </style>
+    <!-- <script src="lunbo.js"></script> -->
+</head>
+
+<body>
+    <div class="lunbo">
+        <span class="arrow-left" id="arrow-left">左</span>
+        <img id="pic" src="lunbo1.png" title="1" alt="">
+        <span class="arrow-right" id="arrow-right">右</span>
+        <div class="items">
+            <span class="item active" title="1"></span>
+            <span class="item" title="2"></span>
+            <span class="item" title="3"></span>
+            <span class="item" title="4"></span>
+            <span class="item" title="5"></span>
+        </div>
+
+    </div>
+
+    <script src="lunbo.js"></script>
+
+</body>
+
+</html>

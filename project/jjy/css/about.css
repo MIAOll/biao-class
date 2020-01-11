@@ -1,0 +1,16 @@
+.head {
+    background-image: url(../image/bg3.jpg);
+    position: relative;
+}
+
+.head .desc {
+    position: absolute;
+    top: 150px;
+    left: 920px;
+    color: #ffffff;
+    line-height: 1.5;
+}
+
+.head .desc p {
+    font-size: 14px;
+}
