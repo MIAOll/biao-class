@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .bg {
+            background-color: blue;
+        }
+        
+        .border {
+            border: 1px solid red;
+        }
+        
+        .font {
+            font-size: 20px;
+            color: blue;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="first bg">1</div>
+    <div class="second border">2</div>
+    <span>test</span>
+    <form action=""></form>
+
+    <script src="aboutClass.js"></script>
+    <script>
+        // var first = document.getElementsByClassName("bg")[0];
+        var first = document.querySelector(".first");
+        var second = document.querySelector(".second")
+            // var third = document.getElementsByTagName("span")[0];
+            // var third = document.querySelectorAll("span")[0];
+        var third = document.querySelector("span");
+        var forth = document.querySelector("form");
+        addClass(first, "font");
+        addClass(third, "bg");
+        removeClass(second, "border");
+        removeClass(second, "font");
+        removeClass(forth, "font");
+        console.log(hasClass(second, "second"));
+        console.log(hasClass(second, "font"));
+    </script>
+</body>
+
+</html>

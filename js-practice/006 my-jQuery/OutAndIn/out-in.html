@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .red {
+            background-color: red;
+            height: 30px;
+            border: 1px solid #000;
+            overflow: hidden;
+        }
+    </style>
+</head>
+
+<body>
+
+    <button>
+        淡入
+</button>
+    <button>
+        淡出
+</button>
+    <button>上卷</button>
+    <button>下拉</button>
+    <div class="red">
+        Hello world!!!!
+    </div>
+
+</body>
+<script src="out.js"></script>
+<script src="in.js"></script>
+
+<script>
+    var hello = document.querySelector(".red");
+    var btn0 = document.querySelectorAll("button")[0];
+    var btn1 = document.querySelectorAll("button")[1];
+    var btn2 = document.querySelectorAll("button")[2];
+    var btn3 = document.querySelectorAll("button")[3];
+
+    btn0.addEventListener('click', function() {
+        fadeIn(hello);
+    })
+    btn1.addEventListener('click', function() {
+        fadeOut(hello);
+    })
+    btn2.addEventListener('click', function() {
+        slideUp(hello);
+    })
+    btn3.addEventListener('click', function() {
+        slideDown(hello, 100);
+    })
+</script>
+
+</html>
