@@ -1,0 +1,18 @@
+.container {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.slider {
+    position: relative;
+}
+
+.item {
+    position: absolute;
+    transition: all .5s;
+    opacity: 0;
+}
+
+.item:first-of-type {
+    opacity: 1;
+}

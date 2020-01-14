@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        /*
+        本style是弹出层插件配套样式 
+         */
+        
+        .popup {
+            /* display: none; */
+            position: fixed;
+            background-color: #fff;
+            box-shadow: 0 1px 5px rgba(0, 0, 0, .1);
+            padding: 10px;
+            border: 4px solid;
+            border: 3px solid;
+            z-index: 2;
+        }
+        
+        [hidden] {
+            display: none!important;
+        }
+        
+        .mask {
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-color: rgba(0, 0, 0, .6);
+            z-index: 1;
+        }
+    </style>
+
+</head>
+
+<body>
+    <button id="trigger">收藏</button>
+    <div id="popup">
+        确定要收藏吗？
+    </div>
+    <div>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Iste nobis, nemo odio deserunt itaque vel quod cumque magni aliquam quas at ullam eligendi quasi earum. Odit accusantium consectetur deleniti nam! Lorem ipsum dolor sit amet consectetur adipisicing
+        elit. Voluptatem dolores quasi nemo officiis illum. Illum aliquid corporis, praesentium consectetur delectus neque minus laborum qui dolorem iusto saepe. Delectus, vel aliquid! Lorem, ipsum dolor sit amet consectetur adipisicing elit. Saepe, omnis
+        reprehenderit eum iste asperiores debitis Lorem ipsum dolor sit amet consectetur adipisicing elit. Iste nobis, nemo odio deserunt itaque vel quod cumque magni aliquam quas at ullam eligendi quasi earum. Odit accusantium consectetur deleniti nam!
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatem dolores quasi nemo officiis illum. Illum aliquid corporis, praesentium consectetur delectus neque minus laborum qui dolorem iusto saepe. Delectus, vel aliquid! Lorem, ipsum dolor
+        sit amet consectetur adipisicing elit. Saepe, omnis reprehenderit eum iste asperiores debitisLorem ipsum dolor sit amet consectetur adipisicing elit. Iste nobis, nemo odio deserunt itaque vel quod cumque magni aliquam quas at ullam eligendi quasi
+        earum. Odit accusantium consectetur deleniti nam! Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatem dolores quasi nemo officiis illum. Illum aliquid corporis, praesentium consectetur delectus neque minus laborum qui dolorem iusto
+        saepe. Delectus, vel aliquid! Lorem, ipsum dolor sit amet consectetur adipisicing elit. Saepe, omnis reprehenderit eum iste asperiores debitisLorem ipsum dolor sit amet consectetur adipisicing elit. Iste nobis, nemo odio deserunt itaque vel quod
+        cumque magni aliquam quas at ullam eligendi quasi earum. Odit accusantium consectetur deleniti nam! Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatem dolores quasi nemo officiis illum. Illum aliquid corporis, praesentium consectetur
+        delectus neque minus laborum qui dolorem iusto saepe. Delectus, vel aliquid! Lorem, ipsum dolor sit amet consectetur adipisicing elit. Saepe, omnis reprehenderit eum iste asperiores debitisLorem ipsum dolor sit amet consectetur adipisicing elit.
+        Iste nobis, nemo odio deserunt itaque vel quod cumque magni aliquam quas at ullam eligendi quasi earum. Odit accusantium consectetur deleniti nam! Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatem dolores quasi nemo officiis
+        illum. Illum aliquid corporis, praesentium consectetur delectus neque minus laborum qui dolorem iusto saepe. Delectus, vel aliquid! Lorem, ipsum dolor sit amet consectetur adipisicing elit. Saepe, omnis reprehenderit eum iste asperiores debitisodit
+        nihil nesciunt recusandae, assumenda ad a rem eveniet in maxime, atque voluptates autem? Tempora?
+    </div>
+    <!-- <div class="amsk"></div> -->
+
+    <script>
+        let trigger, popup, mask;
+        boot('#trigger', '#popup');
+
+        function initPopup() {
+            popup.classList.add('popup');
+            popup.hidden = 'true';
+            console.dir(popup);
+            repositionPopup();
+        }
+
+        function repositionPopup(position = 'center', yOffset = 0, xOffset = 0) {
+            // 获取浏览器窗口的尺寸
+            let windowWidth = window.innerWidth;
+            let windowHeight = window.innerHeight;
+            // 获取元素本身的尺寸
+            let width = popup.offsetWidth;
+            let height = popup.offsetHeight;
+            // 默认的，Popup在横轴和纵轴都居中，也就是'center'
+            popup.style.left = windowWidth / 2 - width / 2 + xOffset + 'px';
+            popup.style.top = windowHeight / 2 - height / 2 + yOffset + 'px';
+        }
+
+        function initMask() {
+            mask = document.createElement("div");
+            mask.classList.add("mask");
+            document.body.appendChild(mask);
+            mask.hidden = "true";
+        }
+
+        function bindOpen() {
+            trigger.addEventListener('click', () => {
+                turnVisibility();
+            })
+        }
+
+        function bindClose() {
+
+            mask.addEventListener('click', () => {
+                turnVisibility();
+            })
+        }
+
+        function turnVisibility() {
+            popup.hidden = !popup.hidden;
+            mask.hidden = !mask.hidden;
+        }
+
+        function boot(triggerSelector, popupSelector) {
+            trigger = document.querySelector(triggerSelector);
+            popup = document.querySelector(popupSelector);
+
+            initPopup();
+            initMask();
+
+            bindOpen();
+            bindClose();
+        }
+    </script>
+</body>
+
+</html>

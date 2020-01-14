@@ -27,7 +27,7 @@
     <div class="second border">2</div>
     <span>test</span>
     <form action=""></form>
-
+    <button id="classToggle">切换border类</button>
     <script src="aboutClass.js"></script>
     <script>
         // var first = document.getElementsByClassName("bg")[0];
@@ -37,13 +37,22 @@
             // var third = document.querySelectorAll("span")[0];
         var third = document.querySelector("span");
         var forth = document.querySelector("form");
-        addClass(first, "font");
-        addClass(third, "bg");
-        removeClass(second, "border");
-        removeClass(second, "font");
-        removeClass(forth, "font");
-        console.log(hasClass(second, "second"));
-        console.log(hasClass(second, "font"));
+        var btn = document.querySelector("#classToggle");
+
+        // addClass(first, "font");
+        // addClass(third, "bg");
+        // removeClass(second, "border");
+        // removeClass(second, "font");
+        // removeClass(forth, "font");
+        // console.log(hasClass(second, "second"));
+        // console.log(hasClass(second, "font"));
+
+        // addClass(second, "border");
+        console.log(classCut(second));
+        console.log(hasClass(second, "border"));
+        btn.addEventListener('click', function() {
+            toggleClass(second, "border");
+        })
     </script>
 </body>
 

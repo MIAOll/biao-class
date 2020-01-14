@@ -46,10 +46,24 @@ function removeClass(element, value) {
 
 function hasClass(element, value) {
     var names = classCut(element);
+    console.log(names.length);
     for (var i = 0; i < names.length; i++) {
+        console.log(names[i]);
         if (names[i] == value) {
             return true;
         }
-        return false;
+    }
+    return false;
+}
+
+function toggleClass(element, value) {
+    console.log(element.className);
+    console.log(hasClass(element, value));
+    if (hasClass(element, value)) {
+        removeClass(element, value)
+        console.log(element.className);
+    } else {
+        addClass(element, value);
+        console.log(element.className);
     }
 }
