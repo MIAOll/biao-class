@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .dropdown {
+            min-width: 5em;
+            display: inline-block;
+            border: 2px solid;
+        }
+        
+        .dropdown a {
+            display: block;
+            padding: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="dropdown" class="dropdown"></div>
+
+
+    <script>
+        // 用于追加数据的根元素
+        let dropdown = document.getElementById('dropdown');
+        // 用于渲染的数据
+        let list = [{
+            text: 'a',
+            href: 'https://a.cn',
+        }, {
+            text: 'b',
+            href: 'https://biaoyansu.com',
+        }, {
+            text: 'c',
+            href: 'https://chaoshi.tmall.com',
+        }, {
+            text: 'd',
+            href: 'https://douban.com',
+        }, ];
+
+        boot();
+
+        function boot() {
+            render();
+
+            // 每秒追加一条数据，并重新渲染
+            // setInterval(() => {
+            //     list.push({
+            //         text: 'e',
+            //         href: 'https://ebay.com',
+            //     });
+            //     render();
+            // }, 1000);
+        }
+
+        /**
+         * 通过数据生成内容
+         */
+        function render() {
+            dropdown.innerHTML = " ";
+            // 清空上次渲染的内容
+            list.forEach(it => {
+                var a = document.createElement("a");
+                a.innerText = it.text;
+                a.href = it.href;
+                dropdown.appendChild(a);
+            })
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        td,
+        th {
+            text-align: left;
+            border: 1px solid;
+            padding: .5em;
+        }
+        
+        .toolbar {
+            margin: .5em 0;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>背背山中学花名册</h1>
+    <div class="toolbar">
+        <div id="score-filter">
+            <button data-max="100" data-min="0">查看全部</button>
+            <button data-max="100" data-min="80">只看学霸</button>
+            <button data-max="80" data-min="60">只看学酥</button>
+            <button data-max="60" data-min="0">只看学渣</button>
+        </div>
+    </div>
+    <table>
+        <thead>
+            <th>姓名</th>
+            <th>性别</th>
+            <th>分数</th>
+            <th>操作</th>
+        </thead>
+        <tbody id="tbody">
+        </tbody>
+    </table>
+
+    <script>
+        let tbody = document.querySelector("#tbody");
+        let btns = document.querySelectorAll("button");
+        console.log(btns);
+        let btn0 = btns[0];
+
+        let users = [{
+            name: '老王',
+            gender: '男',
+            score: 90
+        }, {
+            name: '老李',
+            gender: '男',
+            score: 80
+        }, {
+            name: '老赵',
+            gender: '女',
+            score: 70
+        }, {
+            name: '老张',
+            gender: '男',
+            score: 60
+        }, {
+            name: '老A',
+            gender: '男',
+            score: 50
+        }, {
+            name: '老B',
+            gender: '男',
+            score: 40
+        }, ]
+
+        render();
+        filter();
+
+        function render(range = {
+            max: 100,
+            min: 0
+        }) {
+            tbody.innerHTML = '';
+            users.forEach((user, i) => {
+                console.log(user.score);
+                let valid = user.score < range.max && user.score >= range.min;
+                console.log(valid);
+                if (!valid)
+                    return;
+                else {
+                    let tr = document.createElement('tr');
+                    tr.innerHTML = `
+                          <td>${user.name}</td>
+                          <td>${user.gender}</td>
+                          <td>${user.score}</td>
+                          <td><button class="del">删除</button></td>
+                           `;
+                    tbody.appendChild(tr);
+                    let del = tr.querySelector(".del");
+                    del.addEventListener('click', () => {
+                        tr.remove();
+                        console.log(i);
+                        users.splice(i, 1);
+                    })
+
+                }
+
+            })
+        }
+
+
+        function filter() {
+            btns.forEach(btn => {
+                console.log(btn);
+                btn.addEventListener('click', () => {
+
+                    let dataset = btn.dataset;
+                    console.log(dataset);
+
+                    render(dataset);
+
+                })
+            })
+
+
+        }
+    </script>
+</body>
+
+</html>
