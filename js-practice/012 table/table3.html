@@ -107,7 +107,11 @@
                     del.addEventListener('click', () => {
                         tr.remove();
                         console.log(i);
+                        console.log(users);
                         users.splice(i, 1);
+
+                        // 解决动态删除索引的问题
+                        render();
                     })
 
                 }
