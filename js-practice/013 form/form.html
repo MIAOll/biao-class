@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+    <style>
+        input,
+        button {
+            font-size: inherit;
+            padding: .2em .3em;
+            margin: .2em auto;
+        }
+        
+        input {
+            width: 100%;
+        }
+        
+        input[type=checkbox],
+        input[type=radio] {
+            width: auto;
+        }
+    </style>
+</head>
+
+<body>
+    <form id="b">
+        <input type="text" name="name" placeholder="姓名">
+        <input type="number" name="age" placeholder="年龄">
+        <input type="email" name="email" placeholder="邮箱">
+        <input type="date" name="birthday" placeholder="生日">
+        <input type="week" name="weekyo" placeholder="生日">
+        <div>
+            性别
+            <label>
+            男<input type="radio" name="gender" value="male">
+          </label>
+            <label>
+            女<input type="radio" name="gender" value="female">
+          </label>
+        </div>
+        <div>
+            取向
+            <label>
+            男 <input type="checkbox" name="orientation" value="male">
+          </label>
+            <label>
+            女 <input type="checkbox" name="orientation" value="female">
+          </label>
+            <label>
+            车 <input type="checkbox" name="orientation" value="car">
+          </label>
+        </div>
+        <input type="number" name="balance" placeholder="余额">
+        <button type="submit">提交</button>
+    </form>
+
+    <script>
+        /*自己写的第一版getData和setData,封装好的版本在biao.form.js*/
+        function getData(form) {
+            // 初始化纯数据，否则解析后的数据没地方存
+            let data = {};
+            let inputs = form.querySelectorAll('[name]');
+            inputs.forEach(it => {
+                let name = it.name;
+                switch (it.type) {
+                    case 'number':
+                        data[name] = parseFloat(it.value);
+                        break;
+                    case 'radio':
+                        if (!it.checked)
+                            return;
+                        // 否则就存到data中
+                        //    ↓'age'       ↓10
+                        data[name] = it.value;
+                        break;
+
+                    case 'checkbox':
+                        if (!Array.isArray(data[name]))
+                            data[name] = [];
+                        if (it.checked)
+                            data[name].push(it.value);
+                        break;
+
+                    case 'date':
+                    case 'time':
+                    case 'week':
+                    case 'month':
+                    case 'datetime':
+                    case 'datetime-local':
+                        // 就将其转化为更强大的Date对象
+                        data[it.name] = it.valueAsDate;
+                        break;
+                    default:
+                        data[name] = it.value;
+                }
+
+            });
+
+            // 返回解析好的纯数据
+            return data;
+        }
+
+        /**
+         * 通过纯数据填充表单（存值）
+         * @param {Object} data
+         * @param {HTMLFormElement} form
+         */
+        function setData(data, form) {
+            console.log(form);
+            for (let key in data) {
+
+                let input = form.querySelector(`[name=${key}]`);
+                // console.log(input);
+                switch (input.type) {
+
+                    case 'radio':
+                        let radio = form.querySelector(`[type=radio][name=${key}][value=${data[key]}]`);
+                        radio.checked = true;
+                        break;
+
+                    case 'checkbox':
+                        data[key].forEach(element => {
+                            // console.log(element);
+                            let checkbox = form.querySelector(`[type=checkbox][name=${key}][value=${element}]`);
+                            checkbox.checked = 'true';
+                        });
+                    default:
+                        input.value = data[key];
+
+                }
+
+            }
+        }
+
+        let user = {
+            name: '王花花',
+            age: 18,
+            email: 'biaoyansu@gmail.com',
+            birthday: '1998-01-01',
+            weekyo: '1988-W20',
+            gender: 'male',
+            orientation: ['car', 'female'],
+            balance: 10,
+        };
+
+        setData(user, document.getElementById('b'));
+        let data1 = getData(document.getElementById('b'));
+        console.log(data1);
+    </script>
+</body>
+
+</html>
