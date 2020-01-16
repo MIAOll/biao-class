@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .container {
+            margin: 0 auto;
+            max-width: 800px;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        td,
+        th {
+            text-align: left;
+            border: 1px solid;
+            padding: 5px;
+        }
+        
+        tr td:last-of-type {
+            width: 400px;
+            text-align: center;
+        }
+        
+        input {
+            width: 90%;
+        }
+        
+        button {
+            padding: .5em;
+            border: 1px solid #000;
+            border-left: 0;
+        }
+        
+        button:first-child {
+            border-left: 1px solid #000;
+        }
+        
+        button:hover {
+            background: #000;
+            color: #fff;
+        }
+        /* 高光 */
+        
+        tr.active {
+            background: cornflowerblue;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <table id="order-table">
+            <thead></thead>
+            <tbody></tbody>
+        </table>
+    </div>
+
+
+    <script src="myTable.js"></script>
+    <script>
+        // 使用插件开始
+        let orderStruct = {
+            oid: '订单号',
+            product: '产品',
+            totalCost: '总费用',
+        };
+
+        let orders = [{
+            oid: '001',
+            product: '拖鞋',
+            totalCost: 70,
+        }, {
+            oid: '002',
+            product: '毛裤',
+            totalCost: 80,
+        }, {
+            oid: '003',
+            product: '枸杞',
+            totalCost: 90,
+        }, ];
+
+        myTable.boot(
+            '#order-table',
+            orderStruct,
+            orders, [
+                /**
+                 * 删除数据和行
+                 * @param {HTMLTableRowElement} tr 按钮所在行
+                 * @param {number} 索引
+                 */
+                {
+                    class: "delete",
+                    name: "删除",
+                    func: function(tr, i) {
+                        console.log(this.name);
+                        tr.remove();
+                        orders[i] = " ";
+                        console.log(orders);
+                    }
+                }, {
+                    class: "highlight",
+                    name: "高光",
+                    func: function(tr) {
+                        let classes = tr.classList;
+                        if (classes.contains('active')) {
+                            classes.remove('active');
+                        } else {
+                            tr.classList.add('active');
+                        }
+
+                    }
+                }, {
+                    class: "discount",
+                    name: "折扣",
+                    func: function(tr, i) {
+                        //折扣力度，用户自己定
+                        let discount = 0.8;
+                        let totalCost = orders[i].totalCost;
+
+                        totalCost = totalCost * discount;
+                        orders[i].totalCost = totalCost
+                            // console.log(tr.children[2]);
+                        tr.children[2].innerText = totalCost;
+                    }
+                },
+
+                {
+                    class: "up",
+                    name: "上移",
+                    func: function(tr, i) {
+                        if (!(i >= 1))
+                            return;
+                        let prev = i - 1;
+                        let val = orders[prev];
+                        orders[i - 1] = orders[i];
+                        orders[i] = val;
+                        console.log(orders);
+                        let brother = tr.previousElementSibling;
+
+                        // 如果有他哥
+                        if (brother)
+                        // 就把他自己插到他哥前面
+                            brother.insertAdjacentElement('beforebegin', tr);
+
+                    }
+                }, {
+                    class: "down",
+                    name: "下移",
+                    func: function(tr, i) {
+                        if (!(i <= tr.length))
+                            return;
+                        let next = i + 1;
+                        let val = orders[next];
+                        orders[i + 1] = orders[i];
+                        orders[i] = val;
+
+                        console.log(orders);
+                        let brother = tr.nextElementSibling;
+
+                        // 如果有他弟弟
+                        if (brother) {
+                            // 就把他自己插到他弟弟
+                            brother.insertAdjacentElement('afterend', tr);
+                        }
+
+                    }
+                }, {
+                    name: '修改',
+                    class: 'modify',
+                    func: function(tr, index) {
+                        //让当前行的数据都变为可修改状态
+                        //鼠标点击进入可修改数据内容
+                        //修改完当失去焦点时，验证数据是否符合设定
+                        //符合就修改对应的数据，不符合就退回修改时
+                        //单元格刚获得焦点时的内容
+                        /*
+
+                                 比如说点击的是第一行
+                                 {
+                                   oid: '001',
+                                   product: '拖鞋',
+                                   totalCost: 70
+                                 }
+                                 ┌─────────────────────────┐
+                                   001 │ 拖鞋 │ 70| Change
+                                 └─────────────────────────┘
+
+                                 */
+
+                        // 拿到本行所有的子元素，也就是td，也就是单元格 [<001>, <拖鞋>, ...]
+                        let children = tr.children;
+
+                        // 拿到本行对应的数据 { oid: '001', product: ... }
+                        let order = orders[index];
+                        // 因为目前每个单元格都没有明确的类或id来映射数据
+                        // 由于循环对象是拿不到索引的，因为对象只有键（属性），没有索引
+                        // 所以我们只能自己数，那么就从0开始数
+                        // 这样就能把数据中的属性和单元格的顺序对应上
+                        //     0       1         2      <== 单元格顺序
+                        //   oid    product  totalCost  <== 数据中的键
+                        // ┌──────────────────────────────────────┐
+                        //    001  │  拖鞋  │    70     |  Change
+                        // └──────────────────────────────────────┘
+                        let startIndex = 0;
+                        // 循环本行数据
+                        for (let key in order) {
+                            //  以oid为例
+                            //     ↓
+                            //     0       1         2      <== 单元格顺序
+                            //    oid    product  totalCost <== 数据中的键
+                            // ┌──────────────────────────────────────┐
+                            //    001  │  拖鞋  │    70     |  Change
+                            // └──────────────────────────────────────┘
+                            // 拿到属性值，也就是'001'
+                            let val = order[key];
+                            // 拿到对应单元格，也就是<td>001<td>的DOM对象
+                            let td = tr.children[startIndex];
+                            // 将这个单元的内容由'001'替换成'<input value="001">'
+                            // 别忘了这个函数的目的是要编辑数据，没有<input>就不好编辑
+                            td.innerHTML = `<input value="${val}">`;
+                            // 取到刚刚造好的<input>元素
+                            let input = td.querySelector('input');
+                            // 当用户输入时
+                            td.addEventListener('keyup', e => {
+                                // 如果没敲回车，不用管
+                                // 因为用户可能还没编辑完毕
+                                if (e.key != 'Enter')
+                                    return;
+
+                                // 能跑到这里说明敲回车了
+                                // 就说明这个单元格用户编辑完毕了
+
+                                // 取到用户输入的新值比如说'0011'
+                                let newVal = input.value;
+                                // 将input删除（编辑完毕了就不需要了它了）
+                                td.querySelector('input').remove();
+                                // 同时更新对应属性的数据和单元格
+                                // { oid: 001 ..} ==> { oid: 0011 ..}
+                                // ┌───────────       ┌───────────
+                                //   001 │ ...   ==>    0011 │ ...
+                                // └───────────       └───────────
+                                order[key] = td.innerHTML = newVal;
+
+                                console.log(orders);
+                            });
+
+                            startIndex++;
+                        }
+                    },
+                }
+            ]);
+
+        // 使用插件结束
+    </script>
+</body>
+
+</html>

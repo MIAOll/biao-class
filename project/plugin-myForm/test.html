@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="zh-cn">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>表严肃 Demo</title>
+</head>
+
+<body>
+
+    <form id="b">
+        <input type="text" name="name" placeholder="姓名">
+        <input type="number" name="age" placeholder="年龄">
+        <input type="email" name="email" placeholder="邮箱">
+        <input type="date" name="birthday" placeholder="生日">
+        <div>
+            性别
+            <label>
+            男<input type="radio" name="gender" value="male">
+          </label>
+            <label>
+            女<input type="radio" name="gender" value="female">
+          </label>
+        </div>
+        <div>
+            取向
+            <label>
+            男 <input type="checkbox" name="orientation" value="male">
+          </label>
+            <label>
+            女 <input type="checkbox" name="orientation" value="female">
+          </label>
+            <label>
+            车 <input type="checkbox" name="orientation" value="car">
+          </label>
+        </div>
+        <input type="number" name="balance" placeholder="余额">
+        <button type="submit">提交</button>
+    </form>
+
+
+    <script src="myForm.js">
+    </script>
+    <script>
+        let user = {
+            name: '王花花',
+            age: 18,
+            email: 'baidu@gmail.com',
+            birthday: '1998-01-01',
+            gender: 'male',
+            orientation: ['car', 'female'],
+            balance: 10,
+        };
+        let data = myForm.setData(user, b);
+        console.log(data);
+    </script>
+</body>
+
+</html>
