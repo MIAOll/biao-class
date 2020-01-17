@@ -76,9 +76,11 @@
         // 以用户列表为例 [{王花花...}, {李拴蛋...}]
         // 此时循环的就是每一个用户
         list.forEach((it, index) => {
+            // 创建表格行
+            console.log(it);
             if (it == ' ')
                 return;
-            // 创建表格行
+
             let tr = document.createElement('tr');
 
             // 初始化tr的组装字符串
@@ -89,6 +91,9 @@
             for (let key in structure) {
                 // 以 name: '王花花' 为例
                 // 意味着最后生成的字符串为'<td>王花花</td>'
+                if (it[key] == 0) {
+                    it[key] = '0';
+                }
                 html += `<td>${it[key] || '-'}</td>`;
             }
 
