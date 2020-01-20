@@ -1,0 +1,1008 @@
+<!doctype html>
+<html lang="zh-cn">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>表严肃 Demo</title>
+    <style>
+        * {
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            font-family: sans-serif;
+            font-size: 15px;
+        }
+        
+        input,
+        button {
+            border: 1px solid;
+            padding: .5em;
+            font-size: inherit;
+            margin-bottom: .5em;
+        }
+        
+        form input,
+        form button {
+            width: 100%;
+        }
+        
+        button {
+            background: #000;
+            color: #fff;
+        }
+        
+        main {
+            padding: .5em;
+            margin-left: auto;
+            margin-right: auto;
+            max-width: 40em;
+        }
+        
+        .error-container {
+            font-size: 90%;
+            padding: .5em;
+            background: pink;
+            color: #c10;
+            margin-bottom: .5em;
+        }
+        
+        input.error {
+            border: 2px solid #c10;
+            outline: 0;
+        }
+        
+        table {
+            width: 100%;
+            text-align: left;
+            border-collapse: collapse;
+        }
+        
+        td,
+        th {
+            padding: .5em;
+            border-bottom: 1px solid rgba(0, 0, 0, .1);
+        }
+        
+        th {
+            border-width: 2px;
+            border-color: #888;
+        }
+        
+        [hidden] {
+            display: none;
+        }
+        
+        [disabled] {
+            opacity: .4;
+            cursor: not-allowed;
+        }
+        
+        .text-right {
+            text-align: right;
+        }
+        
+        .error {
+            color: #b10;
+            margin-bottom: .5em;
+        }
+    </style>
+</head>
+
+<body>
+    <main>
+        <form id="user-form">
+            <h2>添加用户</h2>
+            <input type="number" name="index" hidden>
+            <input data-rule="username" type="text" name="username" placeholder="用户名">
+            <input data-rule="email" type="text" name="email" placeholder="邮箱">
+            <input data-rule="nullable|numeric" type="text" name="balance" placeholder="余额">
+            <button type="submit">提交</button>
+        </form>
+
+        <table id="user-table">
+            <thead>
+                <th>用户名</th>
+                <th>邮箱</th>
+                <th>余额</th>
+                <th class="text-right">操作</th>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </main>
+    <script>
+        /*
+        |--------------------------------------------------------------------------
+        | biaoForm.js
+        |--------------------------------------------------------------------------
+        | * 快速存取数据
+        | * 自定义提交行为
+        */
+
+        ;
+        (function() {
+            'use strict';
+
+            let form;
+
+            // 将biaoForm暴露出去，否则别的文件访问不到
+            window.biaoForm = function(selector, onSubmit) {
+                form = document.querySelector(selector);
+
+                form.addEventListener('submit', e => {
+                    e.preventDefault();
+                    onSubmit(getData());
+                    form.reset();
+                });
+
+                return {
+                    getData, // 相当于 getData: getData
+                    setData, // 相当于 setData: setData
+                };
+            };
+
+            /**
+             * 解析表单数据（取值）
+             * @param {HTMLFormElement} form 选好的form元素
+             * @return {Object}
+             */
+            function getData() {
+                // 初始化纯数据，否则解析后的数据没地方存
+                let data = {};
+                // 取到所有输入组件，也就是所有有name属性的元素
+                // 如<input name="xxx">或者<textarea name="xxx">...
+                let inputs = form.querySelectorAll('[name]');
+
+                // 循环所有的输入组件
+                inputs.forEach(it => {
+                    // it就是每个输入组件
+                    // 以<input name="age" value="10">为例：
+                    // it.name  ==> 'age'
+                    // it.value ==> '10'
+
+                    // 检查组件的类型
+                    switch (it.type) {
+                        // 如果是数字，就将值转换为数字类型
+                        case 'number':
+                            data[it.name] = parseFloat(it.value);
+                            break;
+                            // 如果是单选框
+                        case 'radio':
+                            // 检查它当前是否打钩了，如果没打勾就跳过
+                            if (!it.checked)
+                                return;
+
+                            // 否则就存到data中
+                            //    ↓'age'       ↓10
+                            data[it.name] = it.value;
+                            break;
+
+                            // 如果是复选框，那么取到的值就应该是个数组，
+                            // 因为可能会选中多项
+                        case 'checkbox':
+                            // 第一次碰到复选框，就应该将data中对应的那一项初始化为空数组
+                            // 否则后面没法推入选中的值
+                            if (!Array.isArray(data[it.name]))
+                                data[it.name] = [];
+
+                            /*
+                              如果当前的复选框打钩了，就应该推入到数组中
+                              <input value=a checked>
+                              <input value=b checked> ==> ['a', 'b']
+                              <input value=c>
+                            */
+                            if (it.checked)
+                                data[it.name].push(it.value);
+                            break;
+                            // 如果是以下类型中的任何一项
+                        case 'date':
+                        case 'time':
+                        case 'week':
+                        case 'month':
+                        case 'datetime':
+                        case 'datetime-local':
+                            // 就将其转化为更强大的Date对象
+                            data[it.name] = it.valueAsDate;
+                            break;
+                            // 默认情况下直接取字符串
+                        default:
+                            data[it.name] = it.value;
+                    }
+                });
+
+                // 返回解析好的纯数据
+                return data;
+            }
+
+            /**
+             * 通过纯数据填充表单（存值）
+             * @param {Object} data
+             * @param {HTMLFormElement} form
+             */
+            function setData(data) {
+                // 循环数据中的每一项
+                for (let key in data) {
+                    // 取到每项的值，方便后面调用
+                    let val = data[key];
+                    // 取到本项对应的输入组件
+                    let input = form.querySelector(`[name=${key}]`);
+
+                    // 检查组件的类型
+                    switch (input.type) {
+
+                        // 如果是单选框
+                        case 'radio':
+                            // 选中类型为"radio"，且name为本项的键，且值为本项值的元素
+                            // 以 gender: 'male' 为例（比如说循环到{... gender: 'male', ...}这一项）
+                            // radio 就等于 <input type=radio name=gender value=male>
+                            //                                                   ↓'gender'     ↓'male'
+                            let radio = form.querySelector(`[type=radio][name=${key}][value=${val}]`);
+
+                            // 如果radio存在，就将其勾上
+                            radio && (radio.checked = true);
+                            break;
+
+                            // 如果是复选框
+                        case 'checkbox':
+                            // 如果是复选框说明值是数组
+                            // 以 orientation: ['male', 'female'] 为例（比如说循环到{... orientation: ['male', 'female'], ...}这一项）
+                            val.forEach(it => {
+                                // 选中类型为"checkbox"，且name为本项的键，且值为本项的值的元素
+                                // 以 'male' 为例
+                                // checkbox 就等于 <input type=checkbox name=orientation value=male>
+                                //                                                       ↓'orientation' ↓'male'`
+                                let checkbox = form.querySelector(`[type=checkbox][name=${key}][value=${it}]`);
+
+                                // 如果checkbox存在，就将其勾上
+                                checkbox && (checkbox.checked = true);
+                            });
+                            break;
+                        default:
+                            // 如果是其他类型的输入组件，就直接存值
+                            input.value = data[key];
+                    }
+                }
+            }
+        })();
+
+        /*
+        |--------------------------------------------------------------------------
+        | biaoTable.js
+        |--------------------------------------------------------------------------
+        | * 通过数据快速渲染内容
+        | * 个性化行操作
+        */
+
+        ;
+        (function() {
+            'use strict';
+
+            // 全文变量备用
+            let table, thead, tbody, structure, list, operations;
+
+            // 暴露插件全局变量
+            window.biaoTable = function(...args) {
+                boot(...args);
+                return {
+                    render
+                };
+            };
+
+            /**
+             * 启动
+             * @param {string} tableSelector 对应表格的选择器
+             * @param {Object} struct 应该显示哪些列
+             * @param {Array} list 显示的数据
+             * @param {Object} ops 个性按钮及行为
+             */
+            function boot(tableSelector, struct, arr, ops) {
+                // 各种更新全文变量
+                table = document.querySelector(tableSelector);
+                thead = table.tHead;
+                tbody = table.tBodies[0];
+                structure = struct;
+                list = arr;
+                operations = ops;
+
+                // 直接渲染
+                render();
+            }
+
+            /**
+             * 总渲染
+             */
+            function render() {
+                renderHead();
+                renderBody();
+            }
+
+            /**
+             * 渲染thead
+             *
+             * 根据structure渲染thead
+             * {
+             *   name: '姓名',   ==>  |姓名|性别|
+             *   gender: '性别',      |xxx|xxx|
+             * }
+             */
+            function renderHead() {
+                thead.innerHTML = '';
+
+                // 初始化组装字符串
+                let html = '';
+
+                // 循环structure中的每一条
+                for (let key in structure) {
+                    // 以 name:'姓名' 为例
+                    // 此时key为'name'
+                    // 意味着structure[key]为'姓名'
+                    // 意味着最后生成的字符串为'<th>姓名</th>'
+                    html += `<th>${structure[ key ]}</th>`;
+                }
+
+                // 如果传了个性行为就再加一个表头项
+                if (operations)
+                    html += '<th>操作</th>';
+
+                // 在thead内填充组装好的字符串
+                thead.innerHTML = html;
+            }
+
+            /**
+             * 渲染tbody
+             *
+             * 使用list渲染tbody（通过structure来限制渲染的数量和属性）
+             */
+            function renderBody() {
+                tbody.innerHTML = '';
+
+                // 循环每一条数据
+                // 以用户列表为例 [{王花花...}, {李拴蛋...}]
+                // 此时循环的就是每一个用户
+                list.forEach((it, index) => {
+                    // 创建表格行
+                    let tr = document.createElement('tr');
+
+                    // 初始化tr的组装字符串
+                    let html = '';
+
+                    // 循环当前用户的属性
+                    // 以 {name: '王花花', gender: '女'} 为例
+                    for (let key in structure) {
+                        // 以 name: '王花花' 为例
+                        // 意味着最后生成的字符串为'<td>王花花</td>'
+                        html += `<td>${it[ key ] || '-'}</td>`;
+                    }
+
+                    // 如果传了个性行为
+                    if (operations) {
+                        // 就依据个性按钮的键生成button的html代码
+
+                        // 准备按钮的html代码
+                        let btnHtml = '';
+
+                        // 循环所有行为
+                        // 以
+                        // {
+                        //   Delete   : function(){...},
+                        //   Highlight: function(){...}
+                        // }
+                        // 为例
+                        for (let action in operations) {
+                            // 每个行为都是一个按钮
+                            // 以 Delete:function(){...} 为例
+                            //                             ↓'Delete'  ↓'Delete'
+                            btnHtml += `<button class="${action}">${action}</button>`;
+                            // 最后得到 '<button class="Delete">Delete</button>'
+                        }
+
+                        // 将组装好的按钮html插入到操作单元格中
+                        // btnHtml ==> <button class="Delete">Delete</button>
+                        //             <button class="Highlight">Highlight</button>
+                        html += `<td>${btnHtml}</td>`;
+                    }
+
+                    // 在tr内填充组装好的字符串
+                    tr.innerHTML = html;
+
+                    // 如果传了个性行为
+                    if (operations) {
+                        // 就给每个行为对应的按钮绑事件
+                        for (let key in operations)
+                        // 以 Delete:function(){...} 为例
+                            tr
+                            .querySelector('.' + key) // 现通过类名选中按钮，其类名为'.Delete'
+                            .addEventListener('click', () => {
+                                // 此处的operations[key]就是function(){...}函数本身
+                                // 后面的小括号触发了函数，并将其所在行和对应的数据索引回传回去
+                                operations[key](tr, index);
+                            });
+                    }
+
+                    // 在tbody最后追加一行
+                    tbody.appendChild(tr);
+                });
+            }
+        })();
+
+        /*
+        |--------------------------------------------------------------------------
+        | biaoValee.js
+        |--------------------------------------------------------------------------
+        | 通过字符串规则快速验证
+        | 动态显示input或表单的错误信息
+        */
+
+        ;
+        (function() {
+            'use strict';
+
+            // 基础验证规则
+            let is = {
+                nullable() {
+
+                },
+
+                /**
+                 * 是否为数字
+                 * @param {number} value
+                 * @return {boolean}
+                 */
+                numeric(value) {
+                    if (!/^\d+$/.test(value.toString()))
+                        throw '不是合法的数字';
+                },
+
+                /**
+                 * 是否大于指定数字
+                 * @param {number} value
+                 * @param {number} comparison 最小值
+                 * @return {boolean}
+                 */
+                min(value, comparison) {
+                    if (value < comparison)
+                        throw '不可小于' + comparison;
+                },
+
+                /**
+                 * 是否小于指定数字
+                 * @param {number} value
+                 * @param {number} comparison 最大值
+                 * @return {boolean}
+                 */
+                max(value, comparison) {
+                    if (value > comparison)
+                        throw '不可大于' + comparison;
+                },
+
+                /**
+                 * 是否在两个值之间
+                 * @param {number} value
+                 * @param {number} min
+                 * @param {number} max
+                 * @return {boolean}
+                 */
+                between(value, min, max) {
+                    if (!this.min(value, min) ||
+                        !this.max(value, max)
+                    )
+                        throw '必须小于' + max + '且大于' + min;
+                },
+
+                /**
+                 * 是否是正数
+                 * @param {number} value
+                 * @return {boolean}
+                 */
+                positive(value) {
+                    if (!this.numeric(value))
+                        return false;
+
+                    if (value <= 0)
+                        throw '不可小于0';
+                },
+
+                /**
+                 * 是否为负数
+                 * @param value
+                 * @return {boolean}
+                 */
+                negative(value) {
+                    if (!this.numeric(value))
+                        return false;
+
+                    if (value >= 0)
+                        throw '不可大于0';
+                },
+
+                /**
+                 * 字符串是否小于指定长度
+                 * @param {string} value
+                 * @param {number} comparison
+                 * @return {boolean}
+                 */
+                minLength(value, comparison) {
+                    if (value.length < comparison)
+                        throw '长度不可小于' + comparison;
+                },
+
+                /**
+                 * 字符串是否大于指定长度
+                 * @param {string} value
+                 * @param {number} comparison
+                 * @return {boolean}
+                 */
+                maxLength(value, comparison) {
+                    if (value.length > comparison)
+                        throw '长度不可大于' + comparison;
+                },
+
+                /**
+                 * 字符串是否在指定长度之间
+                 * @param {string} value
+                 * @param {number} min
+                 * @param {number} max
+                 * @return {*|boolean}
+                 */
+                lengthBetween(value, min, max) {
+                    if (!this.minLength(value, min) ||
+                        !this.maxLength(value, max))
+                        throw '长度需介于' + min + '至' + max + '之间';
+                },
+
+                /**
+                 * 字符串是否以某段字符开始
+                 * @param {string} value
+                 * @param {string} comparison
+                 * @return {*|boolean}
+                 */
+                startsWith(value, comparison) {
+                    if (!value.startsWith(comparison))
+                        throw '必须以"' + comparison + '"开头';
+                },
+
+                /**
+                 * 字符串是否以某段字符结束
+                 * @param {string} value
+                 * @param {string} comparison
+                 * @return {*|boolean}
+                 */
+                endsWith(value, comparison) {
+                    if (!value.endsWith(comparison))
+                        throw '必须以"' + comparison + '"结束';
+                },
+
+                includes(value, comparison) {
+                    if (!value.includes(comparison))
+                        throw '必须包含"' + comparison + '"';
+                },
+
+                /**
+                 * 在数组中
+                 * @param {mix} value
+                 * @param {Array} comparison
+                 */
+                in (value, comparison) {
+                    if (comparison.indexOf(value) === -1)
+                        throw '必须在' + comparison + '之重';
+                },
+
+                /**
+                 * 邮箱格式是否合法
+                 * @param {string} value
+                 * @return {boolean}
+                 */
+                email(value) {
+                    let re = /^\w+@\w+\.\w+$/;
+                    if (!re.test(value))
+                        throw '不合法的邮箱';
+                },
+
+                /**
+                 * 用户名格式是否合法
+                 * @param {string} value
+                 * @return {boolean}
+                 */
+                username(value) {
+                    let re = /^[a-zA-Z0-9]\w+$/;
+                    if (!re.test(value))
+                        throw '不合法的用户名';
+                },
+
+                /**
+                 * 手机号格式是否合法
+                 * @param {string} value
+                 * @param {string} country 所在国家
+                 * @return {boolean}
+                 */
+                phone(value, country = 'zh') {
+                    let re;
+
+                    switch (country) {
+                        case 'zh':
+                            re = /^(?:\+?(?:86))?(\s|-)?1\d{10}$/;
+                            break;
+                    }
+
+                    if (!re.test(value))
+                        throw '不合法的手机号';
+                },
+
+                /**
+                 * 是否可以匹配正则
+                 * @param value
+                 * @param re 用于匹配的正则表达式
+                 * @return {boolean}
+                 */
+                regex(value, re) {
+                    if (typeof re == 'string')
+                        re = new RegExp(re);
+
+                    if (!re.test(value))
+                        throw '不合法的格式';
+                },
+            };
+
+            // 暴露接口
+            window.valee = {
+                validate,
+                is,
+                applyRules,
+                boot,
+            };
+
+            /**
+             * 通过字符串规则验证
+             * @param {*} value 如：'whh'
+             * @param {string} strRule 如：'username|max:12'
+             * @return {Array} 错误信息，如：['用户名格式有误', '长度不可超过12位']
+             */
+            function validate(value, strRule) {
+                return applyRules(value, parseRules(strRule));
+            }
+
+            /**
+             * 指定要验证的input或form
+             * @param {string} selector
+             */
+            function boot(selector) {
+                let el = document.querySelector(selector);
+
+                // 如果是表单元素
+                if (el.nodeName == 'FORM') {
+                    el._submit = el.querySelector('[type=submit]');
+                    el._inputs = el.querySelectorAll('[data-rule]');
+                    el._submit.disabled = true;
+
+                    // 绑定提交事件，确保提交时能验证一次
+                    bindSubmit(el);
+                    // 绑定键盘事件，每次修改都会验证
+                    bindFormKeyup(el);
+                } else { // 如果是其他元素：input, textarea, select...
+                    // 绑定键盘事件，每次修改都会验证
+                    bindInputKeyup(el);
+                }
+            }
+
+            /**
+             * 为input绑定键盘事件
+             * @param {HTMLElement} input
+             */
+            function bindInputKeyup(input) {
+                // 每次有键抬起
+                input.addEventListener('keyup', e => {
+                    // 开始验证并获取错误信息
+                    validateInput(input);
+                    // 显示错误信息
+                    showInputError(input);
+                });
+            }
+
+            /**
+             * 验证单个input
+             * @param input
+             * @return {Array}
+             */
+            function validateInput(input) {
+                // 获取data-rule中的规则
+                let rule = input.dataset.rule;
+                // 获取输入的值
+                let value = input.value;
+                // 验证并拿到错误信息
+                let errors =
+                    input.$errors =
+                    validate(value, rule);
+
+                return errors;
+            }
+
+            /**
+             * 验证表单
+             * @param {HTMLFormElement} form
+             */
+            function validateForm(form) {
+                // 找到提交按钮，因为如果表单数据不合法就需要禁用提交按钮
+                let submit = form._submit;
+                // 选中所有需要验证的input
+                let inputs = form.querySelectorAll('[data-rule]');
+                // 循环每个input
+                inputs.forEach(input => {
+                    // 验证并拿到错误
+                    let errors = validateInput(input);
+
+                    // 如果验证通过，就解禁提交按钮
+                    if (!errors.length) {
+                        submit.disabled = false;
+                    } else { // 否则
+                        // 禁用提交按钮
+                        submit.disabled = true;
+                    }
+
+                    // 显示错误信息
+                    showInputError(input);
+                });
+            }
+
+            /**
+             * 绑定表单中的键盘事件
+             * @param {HTMLFormElement} form
+             */
+            function bindFormKeyup(form) {
+                // 当任何一项可能发生改变时
+                form.addEventListener('keyup', e => {
+                    let errors;
+                    let input = e.target;
+
+                    // 如果事件源没有data-rule，就直接返回
+                    if (!input.dataset.rule)
+                        return;
+
+                    validateInput(input);
+
+                    // if (errors.length)
+                    //   form._submit.disabled = true;
+                    // else
+                    //   form._submit.disabled = false;
+
+                    guardForm(form);
+                    showInputError(input, errors);
+                });
+            }
+
+            /**
+             * 提交按钮是否应该禁用
+             * @param form
+             */
+            function guardForm(form) {
+                let inputs = form._inputs;
+                for (let i = 0; i < inputs.length; i++) {
+                    let input = inputs[i];
+
+                    if (input.$errors && input.$errors.length) {
+                        form._submit.disabled = true;
+                        return;
+                    }
+                }
+
+                form._submit.disabled = false;
+            }
+
+            /**
+             * 绑定表单提交事件
+             * @param form
+             */
+            function bindSubmit(form) {
+                // 当表单提交时
+                form.addEventListener('submit', e => {
+                    e.preventDefault();
+
+                    // 验证整个表单的数据
+                    validateForm(form);
+                });
+            }
+
+            /**
+             * 显示单个input的错误信息
+             * @param {HTMLElement} input 输入组件
+             */
+            function showInputError(input) {
+                let errors = input.$errors;
+
+                // 如果通过了验证（没有错误信息）
+                if (!errors.length) {
+                    // 就隐藏错误信息（可能是前一次验证生成的）
+                    if (input.$errorContainer)
+                        input.$errorContainer.hidden = true;
+                    return;
+                }
+
+                // 如果没有错误信息容器
+                // <input>
+                //    <div class="error"></div>  <== 错误信息容器
+                if (!input.nextElementSibling || !input.nextElementSibling.classList.contains('error')) {
+                    // 就造一个 ==> <div>
+                    // 然后将其缓存在input元素中，方便下次验证时使用
+                    let ec = input.$errorContainer = document.createElement('div');
+                    // 添加error类 ==> <div class="error">
+                    ec.classList.add('error');
+                    // 将其添加在input后面（弟弟的位置）
+                    input.insertAdjacentElement('afterend', ec);
+                }
+
+                // 循环errors，生成错误信息
+                let html = '';
+                errors.forEach(err => {
+                    html += `<div>${err}</div>`;
+                });
+
+                // 替换以前的错误信息
+                input.$errorContainer.innerHTML = html;
+                // 显示错误信息
+                input.$errorContainer.hidden = false;
+            }
+
+
+            /**
+             * 批量验证多条规则（一条数据，多种限制）
+             * @param {*} value 验证的值：123
+             * @param {Array} rules 解析好的规则对象：{numeric:true, min:3, max:12}
+             */
+            function applyRules(value, rules) {
+                // 准备错误信息
+                let errors = [];
+
+                // 循环验证规则，如：
+                // {min: 10, max: 20}
+                for (let key in rules) {
+                    // 以 min:10 为例
+                    // key就是'min'
+                    // ru就是10
+                    let ru = rules[key];
+
+                    try {
+                        if (key == 'nullable' && value == '')
+                            return [];
+
+                        // 相当于 is.min(6, 10)
+                        is[key](value, ru);
+                    } catch (e) { // 捕获验证错误
+                        // 推入错误数组中
+                        errors.push(e);
+                    }
+                }
+
+                // 返回错误数组
+                return errors;
+            }
+
+            /**
+             * 解析规则
+             * @param {string} str 原始字符串规则：'numeric|min:3|max:12'
+             */
+            function parseRules(str) {
+                // 初始化规则对象，
+                // 解析好的规则都会放到这个对象中
+                let rule = {};
+
+                // 由大到小拆分规则
+                // 以'numeric|min:3|max:12'为例
+                // 先用'|'拆分，得到数组：
+                // ['numeric', 'min:3', 'max:12']
+                let ruleArr = str.split('|');
+
+                // 循环数组，继续拆分
+                ruleArr.forEach(it => {
+                    // 使用':'拆分
+                    // 设it为'min:3'
+                    // itArr就等于 ['min', '3']
+                    let itArr = it.split(':');
+
+                    // 第一项为键
+                    let key = itArr[0];
+                    // 第二项为值
+                    let comparison = itArr[1];
+
+                    // 这些规则的值应该是数字类型
+                    let numRules = [
+                        'numeric', 'min', 'max',
+                        'between', 'minLength', 'maxLength',
+                    ];
+
+                    // 如果没有值，说明是xxx:true的简写
+                    if (!comparison) {
+                        comparison = true;
+                    } else { // 否则
+                        // 如果是数字类型的规则就将其转换为数字类型
+                        // 否则会给下游造成隐患
+                        if (numRules.indexOf(key) !== -1)
+                            comparison = parseFloat(comparison);
+
+                        if (key == 'in') {
+                            comparison = comparison.split(',');
+                        }
+                    }
+
+                    // 将当前规则放到规则对象里
+                    rule[key] = comparison;
+                });
+
+                // 返回解析好的规则中
+                return rule;
+            }
+        })();
+
+        /*
+        |--------------------------------------------------------------------------
+        | 业务代码
+        |--------------------------------------------------------------------------
+        | 指导插件如何配合工作
+        */
+
+        ;
+        (function() {
+            'use strict';
+
+            let bf, bt;
+
+            let form = document.querySelector('form');
+
+            let structure = {
+                username: '用户名',
+                email: '邮箱',
+                balance: '余额',
+            };
+
+            let list = [{
+                username: 'whh',
+                email: 'whh@biaoyancu.com',
+                balance: 100,
+            }, {
+                username: 'lsd',
+                email: 'lsd@biaoyancu.com',
+                balance: 120,
+            }, ];
+
+            boot();
+
+            function boot() {
+                valee.boot('#user-form');
+                prepareForm();
+                prepareTable();
+            }
+
+            function prepareForm() {
+                bf = biaoForm('form', onSubmit);
+            }
+
+            function prepareTable() {
+                let actions = {
+                    delete(tr, i) {
+                        tr.remove();
+                        list[i] = null;
+                    },
+                    update(tr, i) {
+                        bf.setData(list[i]);
+                        form.querySelector('[name=index]').value = i;
+                    },
+                };
+
+                bt = biaoTable('table', structure, list, actions);
+            }
+
+            function onSubmit(row) {
+                if (!row.index && row.index !== 0)
+                    list.push(row);
+                else
+                    list[row.index] = row;
+
+                bt.render();
+            }
+        })();
+    </script>
+</body>
+
+</html>
