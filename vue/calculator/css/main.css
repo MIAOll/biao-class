@@ -1,0 +1,33 @@
+.container {
+    width: 400px;
+    padding: 12px;
+    margin-top: 50px;
+    background-image: url(../bg.jpg);
+    background-size: cover;
+}
+
+form {
+    margin-bottom: 2px;
+}
+
+input {
+    border: hidden;
+    text-align: right;
+}
+
+input,
+.btn-box {
+    width: 100%;
+}
+
+.btn-box {
+    margin: .5em 0;
+}
+
+button {
+    width: 24%;
+}
+
+.big-btn {
+    width: 49%;
+}

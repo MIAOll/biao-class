@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" type="text/css" href="https://cdn.bootcss.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="css/main.css">
+</head>
+
+<body>
+    <div class="container" id="app">
+        <h2 style="color: azure;">Vue 计算器</h2>
+        <form action="">
+            <input type="text" v-model="equation" placeholder="0">
+            <input type="text" v-model="result" placeholder="0">
+        </form>
+        <div class="btn-box">
+            <button id="left-parenthesis" @click="pushMark('(')" class="btn btn-default">(</button>
+            <button id="right-parenthesis" @click="pushMark(')')" class="btn btn-default">)</button>
+            <button id="square-root" @click="squareRoot" class="btn btn-default">	
+                &radic;</button>
+            <button id="square" @click="square" class="btn btn-default">	
+                &#120;&sup2;</button>
+        </div>
+
+        <div class="btn-box">
+            <button id="clear" @click="clear" class="btn btn-default btn-danger">C</button>
+            <button id="backspace" @click="backspace" class="btn btn-default">&#9003;</button>
+            <button id="cubic" @click="cubic" class="btn btn-default">&#120;&sup3;</button>
+            <button id="divide" @click="pushMark('/')" class="btn btn-default btn-warning">&#247;</button>
+        </div>
+
+        <div class="btn-box">
+            <button id="seven" @click="pushMark('7')" class="btn btn-default">7</button>
+            <button id="eight" @click="pushMark('8')" class="btn btn-default">8</button>
+            <button id="nine" @click="pushMark('9')" class="btn btn-default">9</button>
+            <button id="multiply" @click="pushMark('x')" class="btn btn-default btn-warning">&#215;</button>
+        </div>
+
+        <div class="btn-box">
+            <button id="four" @click="pushMark('4')" class="btn btn-default">4</button>
+            <button id="five" @click="pushMark('5')" class="btn btn-default">5</button>
+            <button id="six" @click="pushMark('6')" class="btn btn-default">6</button>
+            <button id="subtract" @click="pushMark('-')" class="btn btn-default btn-warning">-</button>
+        </div>
+
+        <div class="btn-box">
+            <button id="one" @click="pushMark('1')" class="btn btn-default">1</button>
+            <button id="two" @click="pushMark('2')" class="btn btn-default">2</button>
+            <button id="three" @click="pushMark('3')" class="btn btn-default">3</button>
+            <button id="add" @click="pushMark('+')" class="btn btn-default btn-warning">+</button>
+        </div>
+
+        <div class="btn-box">
+            <!-- <button id="percentage" class="btn btn-default">%</button> -->
+            <button id="zero" @click="pushMark('0')" class="btn btn-default big-btn btn-info">0</button>
+            <!-- <button id="decimal" @click="pushMark('.')" class="btn btn-default">.</button> -->
+            <button id="equal" @click="calculate" class="btn btn-default big-btn btn-info">=</button>
+        </div>
+
+        <div>
+            这是操作符栈{{ opStack }}---------------q 这是后缀表达式队列 {{q}}
+        </div>
+    </div>
+    <!-- 开发环境版本，包含了有帮助的命令行警告 -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="js/index.js"></script>
+
+
+</body>
+
+</html>
