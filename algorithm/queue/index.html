@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script src="queue.js"></script>
+
+    <script>
+        let queue = new Queue();
+        console.log(queue.isEmpty()); // true
+
+        queue.enqueue('John');
+        queue.enqueue(['Jack', 'Camila']);
+        queue.print(); // John,Jack,Camila
+        console.log(queue.size()); // 3
+        console.log(queue.isEmpty()); // false
+        console.log(queue.front()); // John
+
+        console.log(queue.dequeue()); // John
+        queue.print(); // Jack,Camila
+
+        queue.clear();
+        queue.print(); //
+    </script>
+
+</body>
+
+</html>

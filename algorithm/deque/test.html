@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script src="deque.js"></script>
+    <script>
+        const deque = new Deque();
+        console.log(deque.isEmpty());
+        deque.addBack('john');
+        deque.addBack('jack');
+        console.log(deque.toString());
+        console.log(deque.size());
+        deque.addBack('kat');
+        console.log(deque.toString());
+        deque.removeFront();
+        console.log(deque.toString());
+        deque.removeBack();
+        console.log(deque.toString());
+        deque.addFront('john');
+        console.log(deque.toString());
+    </script>
+</body>
+
+</html>

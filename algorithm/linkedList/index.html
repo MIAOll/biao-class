@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script src="linkedList.js"></script>
+    <script src="LinkedList.1.js"></script>
+    <script>
+        let linkedList = new LinkedList();
+        linkedList.append(10);
+        linkedList.append(15);
+        linkedList.append(20);
+        console.log(linkedList.size());
+
+        console.log(linkedList.toString());
+
+        linkedList.insert(0, 9);
+        linkedList.insert(2, 11);
+        linkedList.insert(5, 25);
+        console.log(linkedList.toString());
+
+        console.log(linkedList.removeAt(0));
+        console.log(linkedList.removeAt(1));
+        console.log(linkedList.removeAt(3));
+        console.log(linkedList.toString());
+
+        console.log(linkedList.indexOf(20));
+
+        linkedList.remove(20);
+
+        console.log(linkedList.toString());
+
+        linkedList.clear();
+        console.log(linkedList.size());
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <!-- <link rel="stylesheet" type="text/css" href="https://cdn.bootcss.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" /> -->
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.3.0/css/bootstrap.min.css">
+
+    <style>
+        .container {
+            margin: 50px auto;
+            width: 500px;
+        }
+        
+        input {
+            color: #555;
+        }
+        
+        #toBinary {
+            border: 1px solid #888;
+            padding: 5px;
+        }
+        
+        #isCanPop {
+            margin-top: 10px;
+            border: 1px solid #888;
+            padding: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+
+        <div id="toBinary">
+            <h3>进制转换</h3>
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="">需转换的数字</span>
+                </div>
+                <input v-model="num1" type="text" class="form-control">
+            </div>
+
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="">需转换的进制</span>
+                </div>
+                <input v-model="base" type="text" class="form-control">
+                <div class="input-group-append">
+                    <button @click="toBinary" class="btn btn-default btn-outline-secondary">转换</button>
+                </div>
+            </div>
+
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="">转换后的数字</span>
+                </div>
+                <input v-model="num2" type="text" class="form-control">
+            </div>
+
+        </div>
+
+        <div id="isCanPop">
+            <h3>将1到n个数以此入栈，并给出一系列出栈顺序，判断此顺序是否有可能</h3>
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="">{{ n }}个数</span>
+                </div>
+                <input v-model="n" type="text" class="form-control">
+            </div>
+
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="">给出一系列出栈顺序以空格分开，如1 2 3</span>
+                </div>
+                <input v-model="arr" type="text" class="form-control">
+                <div class="input-group-append">
+                    <button @click="CanPop" class="btn btn-default btn-outline-secondary">判断</button>
+                </div>
+            </div>
+
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="">转换后的数字</span>
+                </div>
+                <input v-model="isCanPop" type="text" class="form-control">
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- 开发环境版本，包含了有帮助的命令行警告 -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.js"></script>
+    <script src="stack.js"></script>
+    <script src="stack1.js"></script>
+    <script>
+        // console.log(toBinary(5, 3));
+        console.log(isCanPop(7, [3, 2, 1, 7, 5, 6, 4]));
+        console.log(isCanPop(3, [1, 2, 3]));
+
+
+
+        var app1 = new Vue({
+            el: '#toBinary',
+            data: {
+
+                num1: '',
+                base: '',
+                num2: '',
+            },
+            methods: {
+                toBinary: function() {
+                    console.log(this.num1, this.base, this.num2);
+                    this.num2 = toBinary(this.num1, this.base);
+                    console.log(this.num2);
+                }
+            }
+        })
+
+        var app2 = new Vue({
+            el: '#isCanPop',
+            data: {
+                n: 'n',
+                arr: '',
+                isCanPop: '',
+            },
+            methods: {
+                CanPop: function() {
+                    let arr = this.arr.trim()
+                    arr = arr.split(' ');
+                    this.arr = arr;
+                    this.isCanPop = isCanPop(this.n, arr);
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>
